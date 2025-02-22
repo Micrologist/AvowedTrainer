@@ -27,6 +27,7 @@ namespace AvowedTrainer.UI
 			buttons = new Dictionary<string, Button>() {
 				{ "god", god },
 				{ "noclip", noclip },
+				{ "speed", speed },
 				{ "store", store },
 				{ "teleport", teleport }
 			};

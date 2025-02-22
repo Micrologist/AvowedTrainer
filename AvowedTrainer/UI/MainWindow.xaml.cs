@@ -16,12 +16,13 @@ namespace AvowedTrainer.UI
     {
         private readonly Logic.AvowedTrainer trainer;
         private GlobalKeyboardHook kbHook;
-        private readonly float[] gameSpeeds = new float[4] { 1f, 2f, 4f, 0.5f };
+        private readonly float[] FlySpeedMults = new float[4] { 1f, 2f, 4f, 0.5f };
         private bool shouldAcceptKeystrokes = true;
         private readonly Dictionary<string, Key> defaultKeybinds = new Dictionary<string, Key>()
         {
             { "god", Key.F1 },
             { "noclip", Key.F2 },
+            { "speed", Key.F3 },
             { "store", Key.F6 },
             { "teleport", Key.F7 }
         };
@@ -74,6 +75,11 @@ namespace AvowedTrainer.UI
                         keybindActions.Add(keybind.Value, () => noclipBtn_Click(null, null));
                         SetKeybindText(noclipBtn, keybind.Value);
                         keybindStore += "noclip,";
+                        break;
+                    case "speed":
+                        keybindActions.Add(keybind.Value, () => flySpeedBtn_Click(null, null));
+                        SetKeybindText(flySpeedBtn, keybind.Value);
+                        keybindStore += "speed,";
                         break;
                     case "store":
                         keybindActions.Add(keybind.Value, () => saveBtn_Click(null, null));
@@ -163,7 +169,7 @@ namespace AvowedTrainer.UI
             speedBlock.Text = trainer.Vel.ToString("0.00") + " m/s";
             SetLabel(trainer.ShouldGod, godLabel);
             SetLabel(trainer.ShouldNoclip, noclipLabel);
-            SetLabel(trainer.ShouldAmmo, ammoLabel);
+            flySpeedLabel.Content = trainer.FlySpeedMult.ToString("0.0") + "x";
         }
 
         private void SetLabel(bool state, System.Windows.Controls.Label label)
@@ -203,9 +209,10 @@ namespace AvowedTrainer.UI
             trainer.ShouldGod = !trainer.ShouldGod;
         }
 
-        private void ammoBtn_Click(object sender, RoutedEventArgs e)
+        private void flySpeedBtn_Click(object sender, RoutedEventArgs e)
         {
-            trainer.ShouldAmmo = !trainer.ShouldAmmo;
+            float old = trainer.FlySpeedMult;
+            trainer.FlySpeedMult = FlySpeedMults[(Array.IndexOf(FlySpeedMults, old) + 1) % FlySpeedMults.Length];
         }
 
         private void editKeybindBtn_Click(object sender, RoutedEventArgs e)

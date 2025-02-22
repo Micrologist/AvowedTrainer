@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace AvowedTrainer.Logic
@@ -11,8 +12,9 @@ namespace AvowedTrainer.Logic
 		public bool ShouldAmmo { get; set; }
 		public bool ShouldStore { get; set; }
 		public bool ShouldTeleport { get; set; }
+        public float FlySpeedMult { get; set; } = 1f;
 
-		public double XPos { get; private set; }
+        public double XPos { get; private set; }
 		public double YPos { get; private set; }
 		public double ZPos { get; private set; }
 		public double Vel { get; private set; }
@@ -43,7 +45,13 @@ namespace AvowedTrainer.Logic
 
 		private void SetGameState()
 		{
-			if (ShouldStore)
+            var canBeDamaged = IsBitSet((byte)mem.Watchers["canBeDamaged"].Current, 2);
+			var cheatFlying = IsBitSet((byte)mem.Watchers["cheatFlying"].Current, 4);
+			var movementMode = (byte)mem.Watchers["movementMode"].Current;
+			var acceleration = (float)mem.Watchers["acceleration"].Current;
+			var flySpeed = (float)mem.Watchers["flySpeed"].Current;
+
+            if (ShouldStore)
 			{
 				ShouldStore = false;
 				StorePosition();
@@ -55,13 +63,14 @@ namespace AvowedTrainer.Logic
 				Teleport();
 			}
 
-			if (!ShouldNoclip && IsBitSet((byte)mem.Watchers["canBeDamaged"].Current, 2) == ShouldGod)
+			if (!ShouldNoclip && canBeDamaged == ShouldGod)
 			{
 				SetGod(ShouldGod);
 			}
 
-			if (IsBitSet((byte)mem.Watchers["cheatFlying"].Current, 4) != ShouldNoclip)
+            if (cheatFlying != ShouldNoclip || (ShouldNoclip && (movementMode != 5 || acceleration != 99999f || flySpeed != 2500 * FlySpeedMult)))
 			{
+				Debug.WriteLine("setting noclip!");
 				SetNoclip(ShouldNoclip);
 			}
 		}
@@ -115,7 +124,7 @@ namespace AvowedTrainer.Logic
 			if (b)
 			{
 				movementMode = 5;
-				flySpeed = 2500;
+				flySpeed = 2500 * FlySpeedMult;
 				acceleration = 99999;
 				godMode = true;
 			}
