@@ -81,30 +81,39 @@ namespace AvowedTrainer.Logic
             Debug.WriteLine(localPlayerPtr.ToString("X8"));
 
             Watchers = [
-				// LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerCapsule -> Position
-				new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_CAPSULE, 0x260)) { Name = "xPos" },
+                // LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerCapsule -> Position
+                new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_CAPSULE, 0x260)) { Name = "xPos" },
                 new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_CAPSULE, 0x268)) { Name = "yPos" },
                 new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_CAPSULE, 0x270)) { Name = "zPos" },
-				// LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> Velocity
-				new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0xB8)) { Name = "xVel" },
+
+                // LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> Velocity
+                new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0xB8)) { Name = "xVel" },
                 new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0xC0)) { Name = "yVel" },
                 new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0xC8)) { Name = "zVel" },
-				// LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> MovementMode
-				new MemoryWatcher<byte>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0x201)) { Name = "movementMode" },
-				// LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> MaxFlySpeed
-				new MemoryWatcher<float>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0x254)) { Name = "flySpeed" },
-				// LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> MaxAcceleration
-				new MemoryWatcher<float>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0x25C)) { Name = "acceleration" },
-				// LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> CheatFlying
-				new MemoryWatcher<byte>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0x50D)) { Name = "cheatFlying" },
-				// LocalPlayer -> PlayerController -> PlayerCharacter -> EnableCollision
-				new MemoryWatcher<byte>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, 0x5D)) { Name = "collisionEnabled" },
-				// LocalPlayer -> PlayerController -> PlayerCharacter -> CanBeDamaged
-				new MemoryWatcher<byte>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, 0x5A)) { Name = "canBeDamaged" },
-				// LocalPlayer -> PlayerController -> ControlRotation
-				new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, 0x310)) { Name = "vLook" },
+
+                // LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> MovementMode
+                new MemoryWatcher<byte>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0x201)) { Name = "movementMode" },
+
+                // LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> MaxFlySpeed
+                new MemoryWatcher<float>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0x254)) { Name = "flySpeed" },
+
+                // LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> MaxAcceleration
+                new MemoryWatcher<float>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0x25C)) { Name = "acceleration" },
+
+                // LocalPlayer -> PlayerController -> PlayerCharacter -> PlayerMovement -> CheatFlying
+                new MemoryWatcher<byte>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, OFFSET_MOVEMENT, 0x50D)) { Name = "cheatFlying" },
+
+                // LocalPlayer -> PlayerController -> PlayerCharacter -> EnableCollision
+                new MemoryWatcher<byte>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, 0x5D)) { Name = "collisionEnabled" },
+
+                // LocalPlayer -> PlayerController -> PlayerCharacter -> CanBeDamaged
+                new MemoryWatcher<byte>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, OFFSET_CHARACTER, 0x5A)) { Name = "canBeDamaged" },
+
+                // LocalPlayer -> PlayerController -> ControlRotation
+                new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, 0x310)) { Name = "vLook" },
                 new MemoryWatcher<double>(new DeepPointer(localPlayerPtr, OFFSET_CONTROLLER, 0x318)) { Name = "hLook" },
             ];
+
 
             try
             {
