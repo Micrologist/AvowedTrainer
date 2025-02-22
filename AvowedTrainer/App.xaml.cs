@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System.Windows;
 
 namespace AvowedTrainer;
 
@@ -28,6 +29,14 @@ public partial class App : Application
         }
 
         base.OnStartup(e);
+
+        // Set culture globally
+        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+        CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
+        // Also enforce UI culture explicitly
+        Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+        Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
     }
 
     protected override void OnExit(ExitEventArgs e)
